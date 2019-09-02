@@ -17,8 +17,8 @@ from numpy import savetxt
 def combine(originalFileName, solution, solutionRow, lhsSampleFileName):
 	original = genfromtxt(originalFileName, delimiter=',', skip_header=1)
 	LHS = genfromtxt(lhsSampleFileName, delimiter=',')
-	outFile = np.zeros([1008, 32])
-	perturbedIndex = range(0, 1008)
+	outFile = np.zeros([1000, 32])
+	perturbedIndex = range(0, 1000)
 
 	#  add unchanged values to file
 	outFile[:, 0] = perturbedIndex
@@ -29,14 +29,14 @@ def combine(originalFileName, solution, solutionRow, lhsSampleFileName):
 	#  add changed values to file
 	changedIndex = [1, 3, 4, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
 	for i in range(0, 15):
-		columnValue = np.ones([1008, 1])*LHS[:, i]
+		columnValue = np.ones([1000, 1])*LHS[:, i]
 		outFile[:, changedIndex[i]] = columnValue[:][0]
 
 	# print perturbations to one file for WCU reevaluation
 	savetxt('Solution_' + str(solution) + "/all_perturbations" + str(solution) + ".csv", outFile, delimiter=",", fmt='%f')
 
 	# print
-	for i in range(0, 1008):
+	for i in range(0, 1000):
 		miniOut = outFile[i, :]
 		savetxt('Solution_' + str(solution) + "/sample_" + str(i) + ".csv", miniOut[None], delimiter=',', fmt='%f')
 
